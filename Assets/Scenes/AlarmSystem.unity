@@ -4753,6 +4753,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1897953972636050716, guid: c3c2e2ea85819c14eb6936b6c06c9208, type: 3}
   m_PrefabInstance: {fileID: 755322042}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1998348790
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1998348789}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0907ab0d835fb134db496ff43bb11648, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!95 &1998348791
 Animator:
   serializedVersion: 3
@@ -4772,18 +4784,6 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
---- !u!114 &1998348794
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1998348789}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3873968ab9a92742b851cb4b1a44681, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1998348795
 BoxCollider:
   m_ObjectHideFlags: 0

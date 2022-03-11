@@ -13,9 +13,9 @@ public class DoorOpener : MonoBehaviour
                 return;
             }
 
-            if (hit.collider.TryGetComponent<DoorController>(out DoorController door))
+            if (hit.collider.TryGetComponent<DoorAnimationController>(out DoorAnimationController door))
             {
-                door = hit.collider.GetComponent<DoorController>();
+                door = hit.collider.GetComponent<DoorAnimationController>();
                 door.PlayAnimation();
             }
         }
