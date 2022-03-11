@@ -6,13 +6,15 @@ using UnityEngine;
 
 public class AlarmSystem : MonoBehaviour
 {
-    [SerializeField] private float _currentVolume = 0.0f;
     [SerializeField] private float _fadeSpeed = 0.00030f;
 
-    private float _maxVolume = 1.0f;
+    private const float MinVolume = 0.0f;
+    private const float MaxVolume = 1.0f;
+
+    private bool _coroutineIsRunning = false;
     private AudioSource _alarmSystem;
-    private bool isExit;
     private Collider _collider;
+    private Coroutine _alarmSystemJob;
 
     private void Awake()
     {
@@ -22,55 +24,40 @@ public class AlarmSystem : MonoBehaviour
 
     private void OnTriggerEnter(Collider collision)
     {
-        isExit = false;
+        _coroutineIsRunning = true;
 
         if (collision.TryGetComponent<Player>(out Player player))
         {
             _alarmSystem.Play();
-            StartCoroutine(ChangeVolume());
+
+            _alarmSystemJob = StartCoroutine(FadeVolume());
         }
     }
 
     private void OnTriggerExit(Collider collision)
     {
-        isExit = true;
+        _coroutineIsRunning = false;
 
-        StopAllCoroutines();
+        StopCoroutine(_alarmSystemJob);
 
         _alarmSystem.Stop();
-        _currentVolume = 0.0f;
-        _alarmSystem.volume = _currentVolume;
     }
 
-    private IEnumerator TurnUpVolume()
+    private IEnumerator FadeVolume()
     {
-        while (_alarmSystem.volume != _maxVolume)
+        while (_coroutineIsRunning)
         {
-            _alarmSystem.volume += Mathf.MoveTowards(_currentVolume, _maxVolume, _fadeSpeed);
+            var volume = Mathf.MoveTowards(MinVolume, MaxVolume, _fadeSpeed);
 
-            yield return null;
-        }
-    }
+            for (_alarmSystem.volume = MinVolume; _alarmSystem.volume < MaxVolume; _alarmSystem.volume += volume)
+            {
+                yield return null;
+            }
 
-    private IEnumerator TurnDownVolume()
-    {
-        while (_alarmSystem.volume != 0.0f)
-        {
-            _alarmSystem.volume -= Mathf.MoveTowards(_currentVolume, _maxVolume, _fadeSpeed);
-
-            yield return null;
-        }
-    }
-
-    private IEnumerator ChangeVolume()
-    {
-        while (isExit == false)
-        {
-            yield return StartCoroutine(TurnUpVolume());
-
-            yield return new WaitForSeconds(1);
-
-            yield return StartCoroutine(TurnDownVolume());
+            for (_alarmSystem.volume = MaxVolume; _alarmSystem.volume > 0; _alarmSystem.volume -= volume)
+            {
+                yield return null;
+            }
         }
     }
 }
